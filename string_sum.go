@@ -28,22 +28,22 @@ var (
 func StringSum(input string) (output string, err error) {
 	trimmedInput := strings.TrimSpace(input)
 	if trimmedInput == "" {
-		return "", fmt.Errorf(errorEmptyInput.Error(), strconv.ErrSyntax)
+		return "", fmt.Errorf(errorEmptyInput.Error())
 	}
 
 	var operandsSlice = strings.Split(trimmedInput, "+")
 	if len(operandsSlice) != 2 {
-		return "", fmt.Errorf(errorNotTwoOperands.Error(), strconv.ErrSyntax)
+		return "", fmt.Errorf(errorNotTwoOperands.Error())
 	}
 
 	firstOperand, ok := GetOperand(operandsSlice[0])
 	if !ok {
-		return "", fmt.Errorf(errorNotTwoOperands.Error(), strconv.ErrSyntax)
+		return "", fmt.Errorf(errorNotTwoOperands.Error())
 	}
 
 	secondOperand, ok := GetOperand(operandsSlice[1])
 	if !ok {
-		return "", fmt.Errorf(errorNotTwoOperands.Error(), strconv.ErrSyntax)
+		return "", fmt.Errorf(errorNotTwoOperands.Error())
 	}
 
 	result := firstOperand + secondOperand
