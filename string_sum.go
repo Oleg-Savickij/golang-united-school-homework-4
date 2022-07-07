@@ -41,8 +41,8 @@ func StringSum(input string) (output string, err error) {
 		return "", fmt.Errorf(errorNotTwoOperands.Error(), strconv.ErrSyntax)
 	}
 
-	secondOperand, ok := GetOperand(operandsSlice[2])
-	if ok {
+	secondOperand, ok := GetOperand(operandsSlice[1])
+	if !ok {
 		return "", fmt.Errorf(errorNotTwoOperands.Error(), strconv.ErrSyntax)
 	}
 
@@ -54,7 +54,7 @@ func GetOperand(input string) (output int64, ok bool) {
 	if input == "" {
 		return 0, false
 	}
-	value, err := strconv.ParseInt(input, 10, 64)
+	value, err := strconv.ParseInt(strings.TrimSpace(input), 10, 64)
 	if err != nil {
 		return 0, false
 	}
