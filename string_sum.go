@@ -28,34 +28,36 @@ var (
 func StringSum(input string) (output string, err error) {
 	trimmedInput := strings.TrimSpace(input)
 	if trimmedInput == "" {
-		return "", errorEmptyInput
+		return "", fmt.Errorf(errorEmptyInput.Error(), strconv.ErrSyntax)
 	}
 
 	var operandsSlice = strings.Split(trimmedInput, "+")
 	if len(operandsSlice) != 2 {
-		return "", errorNotTwoOperands
+		return "", fmt.Errorf(errorNotTwoOperands.Error(), strconv.ErrSyntax)
 	}
 
 	firstOperand, ok := GetOperand(operandsSlice[0])
-	if ok == true {
-		secondOperand, ok := GetOperand(operandsSlice[2])
-		if ok == true {
-			result := firstOperand + secondOperand
-			return fmt.Sprintf("%f", result), nil
-		}
+	if !ok {
+		return "", fmt.Errorf(errorNotTwoOperands.Error(), strconv.ErrSyntax)
 	}
 
-	return "", err
+	secondOperand, ok := GetOperand(operandsSlice[2])
+	if ok {
+		return "", fmt.Errorf(errorNotTwoOperands.Error(), strconv.ErrSyntax)
+	}
+
+	result := firstOperand + secondOperand
+	return strconv.FormatInt(result, 10), nil
 }
 
-func GetOperand(input string) (output float32, ok bool) {
+func GetOperand(input string) (output int64, ok bool) {
 	if input == "" {
 		return 0, false
 	}
-	value, err := strconv.ParseFloat(input, 32)
+	value, err := strconv.ParseInt(input, 10, 64)
 	if err != nil {
 		return 0, false
 	}
 
-	return float32(value), true
+	return value, true
 }
